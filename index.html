@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura (Aula)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Aura (Aula)</h1>
+<p>총 롤 횟수: <span id="rollCount">0</span></p>
+<p>💰 코인: <span id="coins">0</span></p>
+<p>현재 오라: <span id="currentAura">없음</span></p>
+
+<button onclick="addFavorite(
+document.getElementById('currentAura').textContent
+)">
+⭐ 현재 오라 즐겨찾기
+</button>ㅁ
+
+  <button onclick="roll(1)">🎲 Roll</button>
+  <button onclick="roll(15)">📦 Pack</button>
+  <button onclick="roll(30)">🎁 Box</button>
+
+  <button onclick="startAutoRoll()">🤖 Auto Roll 시작</button>
+<button onclick="stopAutoRoll()">⏹️ Auto Roll 중지</button>
+
+<h2>📜 Aura Index</h2>
+
+<table border="1" style="margin:auto;">
+<tr>
+<th>이름</th>
+<th>확률</th>
+</tr>
+
+<tr><td>일반</td><td>1 / 2</td></tr>
+<tr><td>고급</td><td>1 / 3</td></tr>
+<tr><td>레어</td><td>1 / 15</td></tr>
+<tr><td>울트라 레어</td><td>1 / 25</td></tr>
+<tr><td>에픽</td><td>1 / 30</td></tr>
+<tr><td>울트라 에픽</td><td>1 / 40</td></tr>
+<tr><td>전설</td><td>1 / 100</td></tr>
+<tr><td>초월전설</td><td>1 / 10000</td></tr>
+<tr><td>엔딩티어</td><td>1 / 100000</td></tr>
+<tr><td>울트라티어</td><td>1 / 1000000</td></tr>
+<tr><td>신성</td><td>1 / 10000000000</td></tr>
+
+</table>
+
+<h2>📖 오라 도감</h2>
+
+<ul id="collection"></ul>
+
+<h2>🛒 상점</h2>
+
+<p>⚔️ 공격력: <span id="attackPower">10</span></p>
+<button onclick="upgradeAttack()">
+공격력 강화 (100코인)
+</button>
+
+<p>🍀 행운 레벨: <span id="luckLevel">0</span></p>
+<button onclick="upgradeLuck()">
+행운 강화 (200코인)
+</button>
+
+<select id="monsterSelect">
+    <option value="0">슬라임</option>
+    <option value="1">고블린</option>
+    <option value="2">오크</option>
+    <option value="3">드래곤</option>
+    <option value="4">신성한 용</option>
+</select>
+
+<button onclick="selectMonster()">
+몬스터 선택
+</button>
+
+<h2>👹 몬스터</h2>
+
+<p>현재 몬스터: <span id="monsterName">없음</span></p>
+<p>HP: <span id="monsterHp">0</span></p>
+
+<div id="hpBarContainer">
+    <div id="hpBar"></div>
+</div>
+<button onclick="attackMonster()">⚔️ 공격</button>
+
+<h2>🏪 상점</h2>
+
+<p>🍀 행운 레벨: <span id="luckLevel">0</span></p>
+<p>⚔️ 공격력: <span id="attackPower">10</span></p>
+
+<button onclick="buyLuck()">
+🍀 행운 업그레이드 (100코인)
+</button>
+
+<button onclick="buyAttack()">
+⚔️ 공격력 업그레이드 (50코인)
+</button>
+
+<h2>인벤토리</h2>
+  <ul id="inventory"></ul>
+
+<h2>⭐ 즐겨찾기</h2>
+<ul id="favoriteList"></ul>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
