@@ -45,6 +45,21 @@ const AURA_ATK_BONUS = {
     "신성": 100000
 };
 
+// 오라별 CSS 클래스 (공백 제거된 이름 사용)
+const AURA_CLASS = {
+    "일반": "c-일반",
+    "고급": "c-고급",
+    "레어": "c-레어",
+    "울트라 레어": "c-울트라레어",
+    "에픽": "c-에픽",
+    "울트라 에픽": "c-울트라에픽",
+    "전설": "c-전설",
+    "초월전설": "c-초월전설",
+    "엔딩티어": "c-엔딩티어",
+    "울트라티어": "c-울트라티어",
+    "신성": "c-신성"
+};
+
 // allAuras 순서를 등급 순위로 사용 (인벤토리 중 최고 등급 찾기용)
 const AURA_RANK = {};
 allAuras.forEach((name, i) => { AURA_RANK[name] = i; });
@@ -56,6 +71,16 @@ const monsters = [
     { name: "드래곤", hp: 500, coin: 500 },
     { name: "신성한 용", hp: 5000, coin: 5000 }
 ];
+
+/* ===================== 탭 전환 ===================== */
+function switchTab(tab) {
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === tab);
+    });
+    document.querySelectorAll(".tab-panel").forEach(panel => {
+        panel.classList.toggle("active", panel.id === "tab-" + tab);
+    });
+}
 
 /* ===================== 저장 ===================== */
 function saveData() {
@@ -99,8 +124,7 @@ function roll(amount) {
 
         const currentAura = document.getElementById("currentAura");
         currentAura.textContent = aura;
-        currentAura.style.color = getAuraColor(aura);
-        currentAura.style.fontWeight = "bold";
+        currentAura.className = "current-aura " + (AURA_CLASS[aura] || "");
 
         if (aura === "신성") {
             flashScreen("gold");
@@ -146,9 +170,8 @@ function renderInventory() {
     Object.keys(counts).forEach(aura => {
         const li = document.createElement("li");
         li.textContent = `${aura} x${counts[aura]}`;
+        li.className = AURA_CLASS[aura] || "";
         li.onclick = () => addFavorite(aura);
-        li.style.color = getAuraColor(aura);
-        li.style.fontWeight = "bold";
         list.appendChild(li);
     });
 }
@@ -161,7 +184,7 @@ function renderCollection() {
         const li = document.createElement("li");
         if (inventory.includes(aura)) {
             li.textContent = "✅ " + aura;
-            li.style.color = getAuraColor(aura);
+            li.className = AURA_CLASS[aura] || "";
         } else {
             li.textContent = "❌ ???";
         }
@@ -185,32 +208,15 @@ function renderFavorites() {
     favorites.forEach(aura => {
         const li = document.createElement("li");
         li.textContent = aura;
-        li.style.color = getAuraColor(aura);
+        li.className = AURA_CLASS[aura] || "";
         list.appendChild(li);
     });
-}
-
-function getAuraColor(aura) {
-    switch (aura) {
-        case "일반": return "white";
-        case "고급": return "lime";
-        case "레어": return "deepskyblue";
-        case "울트라 레어": return "violet";
-        case "에픽": return "orange";
-        case "울트라 에픽": return "red";
-        case "전설": return "gold";
-        case "초월전설": return "cyan";
-        case "엔딩티어": return "#ff44ff";
-        case "울트라티어": return "#00ffff";
-        case "신성": return "#ffff00";
-        default: return "white";
-    }
 }
 
 function flashScreen(color) {
     document.body.style.background = color;
     setTimeout(() => {
-        document.body.style.background = "#111";
+        document.body.style.background = "";
     }, 1000);
 }
 
@@ -313,6 +319,10 @@ function upgradeLuck() {
 
 /* ===================== 초기화 ===================== */
 function init() {
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    });
+
     document.getElementById("rollCount").textContent = rollCount;
     document.getElementById("coins").textContent = coins;
     document.getElementById("attackPower").textContent = attackPower;
